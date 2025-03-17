@@ -7,12 +7,10 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 import java.util.concurrent.Executor;
 
 @Slf4j
-@Component
 @RequiredArgsConstructor
 public class ServerDistributeHandler extends SimpleChannelInboundHandler<Object> {
 
@@ -22,7 +20,7 @@ public class ServerDistributeHandler extends SimpleChannelInboundHandler<Object>
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
 
-        if (o != null) {
+        if (o == null) {
             log.error("Message is null");
             return;
         }

@@ -19,6 +19,5 @@ public class DummyProcessor implements Processable {
         HeaderFrame headerFrame = packetFrame.getHeaderFrame();
 
         log.info("Processing - Dummy Information({}) #{} : {}", channel.remoteAddress(), headerFrame.getId(), headerFrame.getOpCode());
-        System.out.println("Send NAK INVALID_OPCODE");
     }
 }

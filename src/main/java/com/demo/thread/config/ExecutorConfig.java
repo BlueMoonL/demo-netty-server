@@ -2,6 +2,8 @@ package com.demo.thread.config;
 
 import com.demo.properties.ThreadProperties;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -9,25 +11,29 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
+@Slf4j
 @Configuration
+@EnableConfigurationProperties(ThreadProperties.class)
 @RequiredArgsConstructor
 public class ExecutorConfig {
 
     private final ThreadProperties threadProperties;
 
-    @Bean
+    @Bean(name="taskExecutor")
     public Executor taskExecutor() {
 
         int coreCount = Runtime.getRuntime().availableProcessors();
 
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(coreCount * threadProperties.getPoolSizeMultiplier());
-        executor.setMaxPoolSize(threadProperties.getMaxPoolSize());
-        executor.setQueueCapacity(threadProperties.getQueueCapacity());
-        executor.setKeepAliveSeconds(threadProperties.getKeepAlive());
+        executor.setCorePoolSize(Math.max(1, coreCount * threadProperties.getPoolSizeMultiplier()));
+        executor.setMaxPoolSize(Math.max(executor.getCorePoolSize(), threadProperties.getMaxPoolSize()));
+        executor.setQueueCapacity(Math.max(100, threadProperties.getQueueCapacity()));
+        executor.setKeepAliveSeconds(Math.max(30, threadProperties.getKeepAliveSeconds()));
         executor.setThreadNamePrefix("task-exec-");
-        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy()); // 과부하 시 호출한 스레드에서 실행
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardOldestPolicy());
+
         executor.initialize();
+        log.info("ThreadPoolTaskExecutor initialized successfully.");
         return executor;
     }
 }

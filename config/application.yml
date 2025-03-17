@@ -2,6 +2,13 @@ application:
   name: "Demo Server"
   version: "1.0.0"
 
+spring:
+  datasource:
+    url: "jdbc:mysql://localhost:3306/demo?verifyServerCertificate=false&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+    username: "demo"
+    password: "demo"
+    driver-class-name: "com.mysql.cj.jdbc.Driver"
+
 netty:
   port: 8080
   readerIdleTime: 0
@@ -19,12 +26,13 @@ thread:
   poolSizeMultiplier: 2
   maxPoolSize: 10
   queueCapacity: 500
-  keepAlive: 60
+  keepAliveSeconds: 60
+
+mybatis:
+  mapper-locations: "classpath*:mapper/*.xml"
+  type-aliases-package: "com.demo.packet"
+  configuration:
+    map-underscore-to-camel-case: "true"
+    cache-enabled: "true"
 
 
-spring:
-  datasource:
-    url: "jdbc:mysql://localhost:3306/demo"
-    username: "root"
-    password: ""
-    driver-class-name: "com.mysql.cj.jdbc.Driver"

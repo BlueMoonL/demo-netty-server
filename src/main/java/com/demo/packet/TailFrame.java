@@ -1,10 +1,7 @@
 package com.demo.packet;
 
 import com.demo.util.TypeHelper;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -12,12 +9,13 @@ import java.nio.ByteOrder;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
 public class TailFrame implements IPacket{
 
     public static final int FRAME_SIZE = 2;
 
     private int checkSum;
-    private int etx;
+    private int etx = 0x03;
 
     public TailFrame(byte[] tailArray, ByteOrder byteOrder) {
 

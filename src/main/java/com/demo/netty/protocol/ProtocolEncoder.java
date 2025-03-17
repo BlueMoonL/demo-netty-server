@@ -7,12 +7,10 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 import java.net.InetSocketAddress;
 
 @Slf4j
-@Component
 @RequiredArgsConstructor
 public class ProtocolEncoder extends MessageToByteEncoder<Object> {
 

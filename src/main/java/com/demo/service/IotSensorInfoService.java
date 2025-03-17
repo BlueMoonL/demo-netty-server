@@ -4,6 +4,7 @@ import com.demo.mapper.SensorInfoMapper;
 import com.demo.packet.IotSensorInfo;
 import com.demo.packet.PacketFrame;
 import com.demo.properties.NettyProperties;
+import com.demo.util.LogHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class IotSensorInfoService {
             sensorInfoMapper.insertSensorInfo(iotSensorInfo);
             return true;
         } catch (Exception e) {
-            log.error("DB Insert Error - {}", e.getMessage());
+            log.error("DB Insert Error - {}", LogHelper.getPrintStackTrace(e));
             return false;
         }
 

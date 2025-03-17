@@ -1,17 +1,17 @@
 package com.demo.packet;
 
 import com.demo.util.TypeHelper;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+@Slf4j
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
 public class HeaderFrame implements IPacket{
 
     public static final int FRAME_SIZE = 10;
@@ -25,8 +25,14 @@ public class HeaderFrame implements IPacket{
 
     public HeaderFrame(int stx, byte[] headerArray, ByteOrder byteOrder) {
 
+        if (headerArray == null || headerArray.length < FRAME_SIZE) {
+           log.error("Invalid header array: insufficient data.");
+        }
+
         ByteBuffer byteBuffer = ByteBuffer.wrap(headerArray);
-        if (byteOrder != null) { byteBuffer.order(byteOrder); }
+        if (byteOrder != null) {
+            byteBuffer.order(byteOrder);
+        }
 
         this.stx = stx;
         this.opCode = TypeHelper.unsignedByteToInt(byteBuffer.get());

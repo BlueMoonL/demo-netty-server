@@ -10,5 +10,5 @@ public class ThreadProperties {
     private int poolSizeMultiplier;
     private int maxPoolSize;
     private int queueCapacity;
-    private int keepAlive;
+    private int keepAliveSeconds;
 }
