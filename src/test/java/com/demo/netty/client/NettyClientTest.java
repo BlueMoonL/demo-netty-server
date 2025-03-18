@@ -1,4 +1,4 @@
-package com.demo.netty.client;
+package com.test.netty.client;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -23,7 +23,7 @@ public class NettyClientTest {
     private static final int CLIENT_COUNT = 100;   // 클라이언트 수
 
     public static void main(String[] args) throws InterruptedException {
-        EventLoopGroup group = new NioEventLoopGroup(); // 클라이언트용 스레드 그룹
+        EventLoopGroup group = new NioEventLoopGroup();
         List<Channel> channels = new ArrayList<>();     // 연결된 채널 리스트
 
         try {
